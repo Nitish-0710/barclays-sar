@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    /* Base surfaces */
+    --background: 215 35% 7%;
+    --foreground: 210 20% 94%;
+
+    --card: 216 33% 11%;
+    --card-foreground: 210 20% 94%;
+
+    --popover: 216 33% 11%;
+    --popover-foreground: 210 20% 94%;
+
+    /* Primary - Steel Blue */
+    --primary: 211 80% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary surface */
+    --secondary: 215 30% 16%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 215 28% 14%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 211 80% 51%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 25% 20%;
+    --input: 215 28% 16%;
+    --ring: 211 80% 51%;
+
+    --radius: 0.5rem;
+
+    /* Custom banking tokens */
+    --navy-950: 215 45% 5%;
+    --navy-900: 215 40% 8%;
+    --navy-800: 215 35% 12%;
+    --navy-700: 215 30% 18%;
+    --navy-600: 215 25% 26%;
+    --navy-500: 215 20% 38%;
+
+    --steel-blue: 211 80% 51%;
+    --steel-blue-dark: 213 75% 40%;
+    --steel-blue-light: 209 80% 65%;
+
+    --risk-critical: 0 72% 51%;
+    --risk-high: 22 90% 52%;
+    --risk-medium: 40 95% 52%;
+    --risk-low: 142 69% 42%;
+
+    --audit-step: 215 30% 16%;
+
+    /* Sidebar */
+    --sidebar-background: 215 40% 8%;
+    --sidebar-foreground: 210 15% 75%;
+    --sidebar-primary: 211 80% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 30% 16%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 215 25% 16%;
+    --sidebar-ring: 211 80% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  code, .mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+}
+
+@layer components {
+  .panel-card {
+    @apply rounded-lg border border-border bg-card p-5;
+  }
+
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-foreground;
+  }
+
+  .stat-label {
+    @apply text-xs text-muted-foreground mt-0.5;
+  }
+
+  .risk-badge-critical {
+    @apply inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold bg-risk-critical/15 text-risk-critical border border-risk-critical/30;
+  }
+
+  .risk-badge-high {
+    @apply inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold bg-risk-high/15 text-risk-high border border-risk-high/30;
+  }
+
+  .risk-badge-medium {
+    @apply inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold bg-risk-medium/15 text-risk-medium border border-risk-medium/30;
+  }
+
+  .risk-badge-low {
+    @apply inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold bg-risk-low/15 text-risk-low border border-risk-low/30;
+  }
+
+  .audit-step {
+    @apply rounded-md border border-border bg-audit-step;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-steel-blue-dark active:scale-95;
+  }
+
+  .btn-success {
+    @apply inline-flex items-center gap-2 rounded-md bg-risk-low/90 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-risk-low active:scale-95;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 rounded-md border border-border bg-transparent px-4 py-2 text-sm font-medium text-foreground transition-all hover:bg-secondary active:scale-95;
+  }
+
+  .gauge-wrapper {
+    @apply relative flex flex-col items-center;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--navy-600));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--navy-500));
+}
+
+/* Subtle gradient line for header */
+.header-gradient {
+  background: linear-gradient(135deg, hsl(215 45% 10%), hsl(215 40% 8%));
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* Risk gauge animation */
+@keyframes gauge-fill {
+  from { stroke-dashoffset: 251; }
+  to { stroke-dashoffset: var(--gauge-target); }
+}
+
+.gauge-arc {
+  animation: gauge-fill 1.2s ease-out forwards;
+  stroke-linecap: round;
+}
+
+/* Pulse for high risk */
+@keyframes risk-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.risk-pulse {
+  animation: risk-pulse 2s ease-in-out infinite;
+}
